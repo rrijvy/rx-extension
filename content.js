@@ -13,17 +13,21 @@
 
       getClipboards.then((res) => {
         existingClipboards = res.clipboards;
-        if (existingClipboards && Array.isArray(existingClipboards) && !existingClipboards.find((x) => x === selectedText)) {
-          const newClipboards = [...existingClipboards, selectedText];
-          console.log(newClipboards);
-          chrome.storage.local.set({ [storageKeys.clipboards]: newClipboards });
+        if (existingClipboards) {
+          if (Array.isArray(existingClipboards) && !existingClipboards.find((x) => x === selectedText)) {
+            const newClipboards = [...existingClipboards, selectedText];
+            chrome.storage.local.set({ [storageKeys.clipboards]: newClipboards });
+          }
+        } else {
+          chrome.storage.local.set({ [storageKeys.clipboards]: [selectedText] });
         }
       });
     } catch (error) {
-      console.log(selectedText);
+      console.log(error);
       chrome.storage.local.set({ [storageKeys.clipboards]: [selectedText] });
     }
-
-    e.preventDefault();
   });
+
+  
+  
 })(chrome);

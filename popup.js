@@ -11,15 +11,17 @@
     const textColumn = document.createElement("td");
     const actionColumn = document.createElement("td");
 
-    const buttonElement = document.createElement("button");
-    buttonElement.innerText = "copy";
-    buttonElement.onclick = (event) => {
-      console.log(data);
+    const copyBtn = document.createElement("button");
+    const deleteBtn = document.createElement("button");
+    copyBtn.innerText = "copy";
+    deleteBtn.innerText = "delete";
+    copyBtn.onclick = (event) => {
       navigator.clipboard.writeText(data);
     };
+    deleteBtn.onclick = (event) => {};
 
     textColumn.innerText = data;
-    actionColumn.appendChild(buttonElement);
+    actionColumn.appendChild(copyBtn);
 
     tableRow.appendChild(textColumn);
     tableRow.appendChild(actionColumn);
@@ -32,10 +34,14 @@
   });
 
   chrome.storage.local.get(storageKeys.clipboards, function (res) {
-    if (res && res.clipboard) {
+    if (res && res.clipboards) {
       res.clipboards.forEach((clipboard) => {
         tableBody.appendChild(getTableRowElement(clipboard));
       });
     }
+  });
+
+  chrome.storage.onChanged.addListener(function (changes, namespace) {
+    console.log(changes, namespace);
   });
 })(chrome);
