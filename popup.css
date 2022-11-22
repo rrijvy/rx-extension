@@ -2,3 +2,17 @@ body {
   height: 500px;
   width: 500px;
 }
+
+.p-5 {
+  padding: 5px;
+}
+
+.m-5 {
+  margin: 5px;
+}
+
+.flex-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+}

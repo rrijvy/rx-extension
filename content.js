@@ -1,4 +1,5 @@
 (function (chrome) {
+  console.log(chrome);
   const storageKeys = {
     clipboards: "clipboards",
   };
